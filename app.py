@@ -26,11 +26,16 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
 html, body, [class*="css"] { font-family: 'Manrope', sans-serif; }
 .stApp { background: linear-gradient(145deg,#f3f7f8 0%,#fbfcfd 65%,#edf5f2 100%); }
+.stApp, .stApp p, .stApp label, .stApp h1, .stApp h2, .stApp h3, .stApp h4,
+[data-testid="stMarkdownContainer"], [data-testid="stCaptionContainer"] {
+    color: #142f38 !important;
+}
 .hero { padding: 1.3rem 0 .9rem; border-bottom: 1px solid #d2dfe0; margin-bottom: 1rem; }
 .eyebrow { color:#087e78; font:500 .76rem 'DM Mono',monospace; letter-spacing:.12em; text-transform:uppercase; }
 .hero h1 { color:#142f38; font-size:2.35rem; margin:.25rem 0; letter-spacing:-.045em; }
 .hero p { color:#536870; max-width:850px; margin-bottom:.15rem; }
 div[data-testid="stMetric"] { background:#fff; border:1px solid #dce7e8; border-radius:12px; padding:13px 16px; }
+[data-testid="stMetricLabel"], [data-testid="stMetricValue"] { color:#142f38 !important; }
 </style>
 <div class="hero"><div class="eyebrow">Engineering physics · discharge model · numerical analysis</div>
 <h1>Smart Battery Discharge</h1>

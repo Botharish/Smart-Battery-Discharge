@@ -10,7 +10,8 @@ PALETTE = {"teal": "#087E78", "blue": "#4267AC", "orange": "#DE8A35", "red": "#C
 def _layout(fig, title: str, x_title: str, y_title: str, height: int = 390):
     fig.update_layout(title=title, xaxis_title=x_title, yaxis_title=y_title, height=height,
                       margin=dict(l=12, r=12, t=55, b=12), plot_bgcolor="white",
-                      paper_bgcolor="rgba(0,0,0,0)", legend=dict(orientation="h", y=-0.22))
+                      paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#233D45"),
+                      legend=dict(orientation="h", y=-0.22))
     fig.update_xaxes(showgrid=True, gridcolor="#E7ECEE")
     fig.update_yaxes(showgrid=True, gridcolor="#E7ECEE")
     return fig
@@ -29,7 +30,7 @@ def discharge_rate_figure(frame):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=frame.time_h, y=frame.current_a, name="Current (A)", line=dict(color=PALETTE["orange"], width=2.5)))
     fig.add_trace(go.Scatter(x=frame.time_h, y=frame.power_w, name="Power (W)", yaxis="y2", line=dict(color=PALETTE["blue"], width=2.5)))
-    fig.update_layout(title="Load and discharge rate", xaxis_title="Time (hours)", yaxis=dict(title="Current (A)"), yaxis2=dict(title="Power (W)", overlaying="y", side="right"), height=360, margin=dict(l=12,r=12,t=55,b=12), plot_bgcolor="white", paper_bgcolor="rgba(0,0,0,0)")
+    fig.update_layout(title="Load and discharge rate", xaxis_title="Time (hours)", yaxis=dict(title="Current (A)"), yaxis2=dict(title="Power (W)", overlaying="y", side="right"), height=360, margin=dict(l=12,r=12,t=55,b=12), plot_bgcolor="white", paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#233D45"))
     return fig
 
 
