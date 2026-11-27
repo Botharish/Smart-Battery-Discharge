@@ -12,8 +12,17 @@ def solver_comparison(config: BatteryConfig) -> tuple[pd.DataFrame, dict[str, fl
     """Compare Euler and RK4 with the analytical solution and SciPy RK45."""
     euler = simulate(config, "Euler")
     rk4 = simulate(config, "RK4")
-    # Align both fixed-step trajectories on the same times. They use identical h.
-    times = np.minimum(euler.time_s.to_numpy(), rk4.time_s.to_numpy())
+    # Compare both methods on one shared time grid. Their numerical estimates
+    # can reach depletion on opposite sides of a step, so their final arrays
+    # may have different lengths even when they share the same nominal h.
+    common_end = min(float(euler.time_s.iloc[-1]), float(rk4.time_s.iloc[-1]))
+    step_s = config.step_minutes * 60.0
+    count = int(np.floor(common_end / step_s))
+    times = np.arange(count + 1, dtype=float) * step_s
+    if common_end - times[-1] > max(1e-10, step_s * 1e-10):
+        times = np.append(times, common_end)
+    else:
+        times[-1] = common_end
     euler_soc = np.interp(times, euler.time_s, euler.soc)
     rk4_soc = np.interp(times, rk4.time_s, rk4.soc)
     exact_soc = np.asarray(theoretical_soc(times, config))

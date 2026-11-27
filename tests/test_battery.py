@@ -60,6 +60,17 @@ class BatteryDischargeTests(unittest.TestCase):
         self.assertGreater(len(frame), 2)
         self.assertLess(errors["RK4 maximum absolute SOC error"], errors["Euler maximum absolute SOC error"])
 
+    def test_solver_comparison_aligns_when_depletion_lands_between_steps(self):
+        config = self.make_config(
+            capacity_ah=5.0, initial_soc_percent=80.0, base_current_a=0.8,
+            voltage_v=3.7, duration_h=8.0, step_minutes=1.0,
+            profile="sinusoidal", variation_percent=40.0, period_minutes=60.0,
+        )
+        frame, errors = solver_comparison(config)
+        self.assertGreater(len(frame), 2)
+        self.assertAlmostEqual(float(frame.time_s.iloc[-1]), 5.0 * 3600.0, places=6)
+        self.assertLess(errors["RK4 maximum absolute SOC error"], 1e-8)
+
 
 class NumericalMethodTests(unittest.TestCase):
     def test_euler_and_rk4_constant_derivative(self):
